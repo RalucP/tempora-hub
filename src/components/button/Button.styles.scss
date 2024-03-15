@@ -1,0 +1,73 @@
+.button {
+  position: relative;
+  font-size: 1em;
+  padding: .6em;
+  width: 100%;
+
+  outline: none;
+  border: none;
+
+  cursor: pointer;
+  overflow: hidden;
+
+  display: flex;
+  justify-content: center;
+  gap: 1em;
+
+  &:hover{
+    transition: all .2s;
+  }
+
+  & .circle{
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    background-color: var(--text-color-30);
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    z-index: 3;
+    animation: ripple 0.5s linear;
+  }
+
+  &.primary{
+    color: var(--text-color);
+    background-color: var(--primary-color);
+
+    &:hover{
+      background-color: var(--primary-color-dark);
+    }
+
+    & .circle{
+      background-color: var(--text-color-30);
+    }
+  }
+
+  &.secondary{
+    color: var(--background-color);
+    background-color: var(--secondary-color);
+
+    &:hover{
+      background-color: var(--secondary-color-dark);
+    }
+
+    & .circle{
+      background-color: var(--background-color-30);
+    }
+  }
+}
+
+@keyframes ripple {
+  0%{
+    transform: scale(0, 0);
+    opacity: 0;
+  }
+  75%{
+    transform: scale(700, 700);
+    opacity: 0.75;
+  }
+  100%{
+    transform: scale(1000, 1000);
+    opacity: 0;
+  }
+}
