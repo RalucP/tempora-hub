@@ -1,0 +1,14 @@
+.divider-container{
+  padding: 1.5em 0;
+
+  font-size: .7em;
+  
+  display: flex;
+  align-items: center;
+  gap: 1em;
+
+  & .line {
+    flex: 1;
+    border-top: 1px solid var(--text-color-30); 
+  }
+}
