@@ -4,4 +4,29 @@
   display: flex;
   align-items: center;
   justify-content: center;
+
+  position: relative;
+  transform-style: preserve-3d;
+
+  & .form-top{
+    transform: rotateY(0deg);
+  }
+
+  & .form-bottom{
+    transform: rotateY(180deg);
+  }
+
+  & .form-front, .form-bottom{
+    position: absolute;
+    backface-visibility: hidden;
+  }
+
+  @keyframes flip {
+    0% {
+      transform: rotateY(0deg);
+    }
+    100% {
+      transform: rotateY(180deg);
+    }
+  }
 }
