@@ -55,6 +55,19 @@
       background-color: var(--background-color-30);
     }
   }
+
+  &.tertiary{
+    color: var(--primary-color);
+    background-color: transparent;
+
+    &:hover{
+      background-color: var(--text-color-10);
+    }
+
+    & .circle{
+      background-color: var(--text-color-15);
+    }
+  }
 }
 
 @keyframes ripple {

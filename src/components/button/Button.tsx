@@ -4,7 +4,8 @@ import './Button.styles.scss'
 
 export enum BUTTON_STYLE_TYPE {
   primary = 'primary',
-  secondary = 'secondary'
+  secondary = 'secondary',
+  tertiary = 'tertiary'
 }
 
 export type ButtonProps = {
@@ -15,6 +16,8 @@ const getButtonType = (buttonType = BUTTON_STYLE_TYPE.primary) => {
   switch(buttonType){
     case BUTTON_STYLE_TYPE.secondary:
       return BUTTON_STYLE_TYPE.secondary
+    case BUTTON_STYLE_TYPE.tertiary:
+      return BUTTON_STYLE_TYPE.tertiary
     default:
       return BUTTON_STYLE_TYPE.primary
   }
