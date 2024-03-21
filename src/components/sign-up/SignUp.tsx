@@ -5,10 +5,15 @@ import FormInput from '../form-input/FormInput';
 
 import './SignUp.styles.scss'
 import { faGoogle } from '@fortawesome/free-brands-svg-icons';
+import { FC } from 'react';
 
-const SignUp = () => {
+export type SignUpProps = {
+  onToggleForm: () => void
+}
+
+const SignUp: FC<SignUpProps> = ({ onToggleForm }) => {
   return(
-    <section className='sign-up-container'>
+    <section className={`sign-up-container form`}>
       <h1>Sign Up</h1>
       <p>Sign up to start managing your tasks</p>
       <form>
@@ -41,8 +46,12 @@ const SignUp = () => {
       <Divider>Or sign up with</Divider>
       <Button buttonType={BUTTON_STYLE_TYPE.secondary}>
         <FontAwesomeIcon icon={faGoogle}/>
-        Sign up with Google
+        Google Account
       </Button>
+      <div className='auth-options-container'>
+        <p>Already have an account?</p>
+        <Button buttonType={BUTTON_STYLE_TYPE.tertiary} onClick={onToggleForm}>Sign in</Button>
+      </div>
     </section>
   )
 }

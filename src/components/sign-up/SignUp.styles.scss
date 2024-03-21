@@ -7,4 +7,22 @@
   border-radius: 5px;
   width: 35%;
   min-width: 100px;
+  min-height: 550px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  & .auth-options-container{
+    display: flex;
+    gap: 1em;
+    justify-content: center;
+    align-items: center;
+
+    font-size: .7em;
+
+    & .button{
+      width: 15%;
+    }
+  }
 }
