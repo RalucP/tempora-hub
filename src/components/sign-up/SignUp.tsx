@@ -20,24 +20,28 @@ const SignUp: FC<SignUpProps> = ({ onToggleForm }) => {
         <FormInput 
           label='Full name'
           type='text'
+          id='sign-up-full-name'
           placeholder=' '
           required
         />
         <FormInput 
           label='E-mail'
           type='email'
+          id='sign-up-email'
           placeholder=' '
           required
         />
         <FormInput 
           label='Password'
           type='password'
+          id='sign-up-password'
           placeholder=' '
           required
         />
         <FormInput 
           label='Confirm password'
           type='password'
+          id='sign-up-confirm-password'
           placeholder=' '
           required
         />

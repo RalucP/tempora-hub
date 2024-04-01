@@ -5,12 +5,12 @@ export type FormInputProps = {
   label?: string
 } & InputHTMLAttributes<HTMLInputElement>
 
-const FormInput: FC<FormInputProps> = ({label, ...otherProps}) => {
+const FormInput: FC<FormInputProps> = ({label, id, ...otherProps}) => {
   return(
     <div className='form-input-container'>
-      <input {...otherProps} className='form-input'/>
+      <input {...otherProps} id={id} className='form-input'/>
       {
-        label && <label className='form-input-label'>{label}</label>
+        label && <label htmlFor={id} className='form-input-label'>{label}</label>
       }
     </div>
   )

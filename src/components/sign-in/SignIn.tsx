@@ -21,12 +21,14 @@ const SingIn: FC<SignInProps> = ({ onToggleForm }) => {
         <FormInput 
           label='E-mail'
           type='email'
+          id='sign-in-email'
           placeholder=''
           required
         />
         <FormInput 
           label='Password'
           type='password'
+          id='sign-in-password'
           placeholder=''
           required
         />
