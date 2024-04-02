@@ -1,0 +1,198 @@
+.task-container{
+  position: relative;
+  width: 100%;
+  padding: 1em 2em;
+
+  text-align: left;
+
+  box-shadow: 2px 2px 5px var(--text-color-15);
+  border-radius: 10px;
+  border: 1px solid var(--text-color-10);
+
+  display: grid;
+  grid-template-columns: 4em auto;
+
+  & .task-label{
+    position: relative;
+    width: fit-content;
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+
+    display: grid;
+    align-items: center;
+
+    cursor: pointer;
+    transition: color 0.3s ease;
+
+    &::after, &::before{
+      content: '';
+      position: absolute;
+    }
+
+    &::before{
+      height: 2px;
+      width: 1em;
+      border-radius: 50%;
+
+      left: -2.5em;
+
+      background: var(--primary-color);
+    }
+
+    &::after{
+      height: 4px;
+      width: 4px;
+
+      top: .65em;
+      left: -2.2em;
+
+      border-radius: 50%;
+    }
+  }
+
+  & .task-checkbox{
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    position: relative;
+    top: .2em;
+    left: 1.5em;
+    
+    height: 15px;
+    aspect-ratio: 1/1;
+
+    outline: none;
+    border: 0;
+
+    display: grid;
+    align-items: center;
+
+    cursor: pointer;
+
+    &::after, &::before{
+      content: '';
+      position: absolute;
+      height: 2px;
+      top: auto;
+      background-color: var(--primary-color);
+      border-radius: 2px;
+    }
+
+    &::before{
+      width: 0px;
+      right: 60%;
+      transform-origin: right bottom;
+    }
+
+    &::after{
+      width: 0px;
+      left: 40%;
+      transform-origin: left bottom;
+    }
+
+    &:checked::before{
+      animation: check-left 0.4s ease forwards;
+    }
+
+    &:checked::after{
+      animation: check-right 0.4s ease forwards;
+    }
+
+    &:checked + .task-label{
+      color: var(--checked-color);
+      animation: move 0.3s ease 0.1s forwards;
+    }
+    
+    &:checked + .task-label::before{
+      background-color: var(--checked-color);
+      animation: slice 0.3s ease 0.1s forwards;
+    }
+
+    &:checked + .task-label::after{
+      animation: firework 0.3s ease 0.1s forwards;
+    }
+  }
+}
+
+@keyframes move {
+  50% {
+    padding-left: 8px;
+    padding-right: 0px;
+  }
+  100% {
+    padding-right: 4px;
+  }
+}
+
+@keyframes slice {
+  60% {
+    width: 100%;
+    left: 4px;
+  }
+  100% {
+    width: 100%;
+    left: -2px;
+    padding-left: 0;
+  }
+}
+
+@keyframes check-left {
+  0% {
+    width: 4px;
+    top: auto;
+    transform: rotate(0);
+  }
+  50% {
+    width: 0px;
+    top: auto;
+    transform: rotate(0);
+  }
+  51% {
+    width: 0px;
+    top: 8px;
+    transform: rotate(45deg);
+  }
+  100% {
+    width: 5px;
+    top: 8px;
+    transform: rotate(45deg);
+  }
+
+}
+@keyframes check-right {
+  0% {
+    width: 4px;
+    top: auto;
+    transform: rotate(0);
+  }
+  50% {
+    width: 0px;
+    top: auto;
+    transform: rotate(0);
+  }
+  51% {
+    width: 0px;
+    top: 8px;
+    transform: rotate(-45deg);
+  }
+  100% {
+    width: 10px;
+    top: 8px;
+    transform: rotate(-45deg);
+  }
+}
+
+@keyframes firework {
+  0% {
+    opacity: 1;
+    box-shadow: 0 0 0 -2px var(--primary-color), 0 0 0 -2px var(--primary-color), 0 0 0 -2px var(--primary-color), 0 0 0 -2px var(--primary-color), 0 0 0 -2px var(--primary-color), 0 0 0 -2px var(--primary-color);
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    box-shadow: 0 -15px 0 0px var(--primary-color), 14px -8px 0 0px var(--primary-color), 14px 8px 0 0px var(--primary-color), 0 15px 0 0px var(--primary-color), -14px 8px 0 0px var(--primary-color), -14px -8px 0 0px var(--primary-color);
+  }
+}

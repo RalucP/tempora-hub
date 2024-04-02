@@ -1,14 +1,19 @@
 :root {
-  --text-color: #2B2B2B;
+  --text-color: rgb(43, 43, 43);
   --text-color-30: rgba(43, 43, 43, 0.3);
   --text-color-15: rgba(43, 43, 43, 0.15);
   --text-color-10: rgba(43, 43, 43, 0.1);
-  --background-color: #F2F2F2;
+
+  --background-color: rgb(242, 242, 242);
   --background-color-30: rgba(242, 242, 242, 0.3);
-  --primary-color: #FF9500;
-  --primary-color-dark: #df8200;
-  --secondary-color: #f2cc98;
+
+  --primary-color: rgb(255, 149, 0);
+  --primary-color-dark: rgb(223, 130, 0);
+
+  --secondary-color: rgb(242, 204, 152);
   --secondary-color-dark: rgb(222, 180, 122);
+
+  --checked-color: rgb(167, 167, 167);
 
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
