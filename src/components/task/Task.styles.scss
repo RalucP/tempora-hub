@@ -5,7 +5,8 @@
 
   text-align: left;
 
-  box-shadow: 2px 2px 5px var(--text-color-15);
+  background-color: var(--background-color);
+  box-shadow: 1px 1px 3px var(--text-color-15);
   border-radius: 10px;
   border: 1px solid var(--text-color-10);
 
@@ -32,7 +33,7 @@
     &::before{
       height: 2px;
       width: 1em;
-      border-radius: 50%;
+      border-radius: 10px;
 
       left: -2.5em;
 
