@@ -1,0 +1,39 @@
+.add-task-container{
+  width: 100%;
+  padding: 1em 1em 1em 3.5em;
+  
+  text-align: left;
+
+  background-color: var(--background-color);
+  box-shadow: 1px 1px 3px var(--text-color-15);
+  border-radius: 10px;
+  border: 1px solid var(--text-color-10);
+
+  display: flex;
+  align-items: center;
+  gap: 1em;
+
+  & .icon{
+    color: var(--primary-color);
+  }
+
+  & .add-task-input{
+    width: 100%;
+    font-size: 16px;
+
+    background-color: transparent;
+    color: var(--text-color);
+    outline: none;
+    border: none;
+
+    &:focus + .button, &:not(:placeholder-shown) + .button{
+      display: block;
+    }
+  }
+
+  & .button{
+    display: none;
+    font-size: 11px;
+    width: 10%;
+  }
+}
