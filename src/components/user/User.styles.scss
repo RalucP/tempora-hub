@@ -1,0 +1,23 @@
+.user-icon{ 
+  background-color: var(--secondary-color);
+  color: var(--background-color);
+
+  font-size: 24px;
+  text-align: center;
+
+  width: 2em;
+  aspect-ratio: 1/1;
+  padding: .2em;
+  border-radius: 50%;
+  border: 1px solid var(--secondary-color-dark);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+
+  cursor: pointer;
+}
