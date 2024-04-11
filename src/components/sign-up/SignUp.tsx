@@ -1,14 +1,21 @@
+import { FC } from 'react';
+import { signInWithGooglePopup } from '../../utils/firebase';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import Button, { BUTTON_STYLE_TYPE } from '../button/Button';
 import Divider from '../divider/Divider';
 import FormInput from '../form-input/FormInput';
 
 import './SignUp.styles.scss'
 import { faGoogle } from '@fortawesome/free-brands-svg-icons';
-import { FC } from 'react';
 
 export type SignUpProps = {
   onToggleForm: () => void
+}
+
+const signInWithGoogle = async () => {
+  await signInWithGooglePopup();
 }
 
 const SignUp: FC<SignUpProps> = ({ onToggleForm }) => {
@@ -48,7 +55,7 @@ const SignUp: FC<SignUpProps> = ({ onToggleForm }) => {
         <Button>Sign up</Button>
       </form>
       <Divider>Or sign up with</Divider>
-      <Button buttonType={BUTTON_STYLE_TYPE.secondary}>
+      <Button buttonType={BUTTON_STYLE_TYPE.secondary} onClick={signInWithGoogle}>
         <FontAwesomeIcon icon={faGoogle}/>
         Google Account
       </Button>
