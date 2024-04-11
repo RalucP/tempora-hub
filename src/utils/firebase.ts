@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { GoogleAuthProvider, NextOrObserver, User, getAuth, onAuthStateChanged, signInWithPopup } from "firebase/auth";
+import { GoogleAuthProvider, NextOrObserver, User, getAuth, onAuthStateChanged, signInWithPopup, signOut } from "firebase/auth";
 import { QueryDocumentSnapshot, doc, getDoc, getFirestore, setDoc } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -59,6 +59,8 @@ export const createUserDocumentFromAuth = async (
 
   return userSnapshot as QueryDocumentSnapshot<UserData>;
 }
+
+export const signOutUser = async () => await signOut(auth);
 
 export const onAuthStateChangedListener = (callback: NextOrObserver<User>) => 
   onAuthStateChanged(auth, callback);

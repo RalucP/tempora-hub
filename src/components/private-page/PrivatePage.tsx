@@ -7,8 +7,6 @@ import { selectCurrentUser } from "../../store/user/user.selector";
 const PrivatePage = ({ children } : { children: ReactNode }) => {
   const currentUser = useSelector(selectCurrentUser);
 
-  console.log(currentUser);
-
   return (
     <>
       { !currentUser ? <Navigate to='auth' /> : children }
