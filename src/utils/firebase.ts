@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { GoogleAuthProvider, NextOrObserver, User, getAuth, onAuthStateChanged, signInWithPopup, signOut } from "firebase/auth";
+import { GoogleAuthProvider, NextOrObserver, User, createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithPopup, signOut } from "firebase/auth";
 import { QueryDocumentSnapshot, doc, getDoc, getFirestore, setDoc } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -25,6 +25,10 @@ export const signInWithGooglePopup = () => signInWithPopup(auth, googleProvider)
 
 export const db = getFirestore();
 
+export type AdditionalInformation = {
+  displayName?: string;
+};
+
 export type UserData = {
   createdAt: Date,
   email: string,
@@ -32,7 +36,8 @@ export type UserData = {
 };
 
 export const createUserDocumentFromAuth = async ( 
-    userAuth: User 
+    userAuth: User,
+    additionalInfo = {} as AdditionalInformation
   ) : Promise<void | QueryDocumentSnapshot<UserData>> => {
   if(!auth) return;
 
@@ -49,7 +54,8 @@ export const createUserDocumentFromAuth = async (
       await setDoc(userDocRef, {
         createdAt,
         displayName,
-        email
+        email,
+        ...additionalInfo,
       });
     }
     catch (error) {
@@ -58,6 +64,12 @@ export const createUserDocumentFromAuth = async (
   }
 
   return userSnapshot as QueryDocumentSnapshot<UserData>;
+}
+
+export const createUserAuthWithEmailAndPassword = async (email: string, password: string) => {
+  if(!email || !password) return;
+
+  return await createUserWithEmailAndPassword(auth, email, password);
 }
 
 export const signOutUser = async () => await signOut(auth);
