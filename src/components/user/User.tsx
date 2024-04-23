@@ -8,10 +8,10 @@ import { setIsDropdownOpen } from '../../store/user/user.reducer';
 const User = () => {
   const dispatch = useDispatch();
   const [ initials, setInitials ] = useState('');
-
+  
   const currentUser = useSelector(selectCurrentUser);
   const isDropdownOpen = useSelector(selectIsDropdownOpen);
-
+  
   const toggleIsDropdownOpen = () => dispatch(setIsDropdownOpen(!isDropdownOpen));
 
   useEffect(() => {

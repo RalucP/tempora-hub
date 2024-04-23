@@ -1,8 +1,8 @@
 import { signOutUser } from '../../utils/firebase';
+
 import './UserDropdown.style.scss';
 
 const UserDropdown = () => {
-
   const handleSignOut = async () => {
     await signOutUser();
   }
