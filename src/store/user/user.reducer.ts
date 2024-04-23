@@ -3,10 +3,12 @@ import { UserData } from "../../utils/firebase";
 
 export type UserState = {
   readonly currentUser: UserData | null
+  readonly isDropdownOpen: boolean
 }
 
 const INITIAL_STATE: UserState = {
-  currentUser: null
+  currentUser: null,
+  isDropdownOpen: false
 };
 
 export const userSlice = createSlice({
@@ -15,10 +17,13 @@ export const userSlice = createSlice({
   reducers: {
     setCurrentUser(state, action) {
       state.currentUser = action.payload;
+    },
+    setIsDropdownOpen(state, action) {
+      state.isDropdownOpen = action.payload;
     }
   }
 });
 
-export const { setCurrentUser } = userSlice.actions;
+export const { setCurrentUser, setIsDropdownOpen } = userSlice.actions;
 
 export const userReducer = userSlice.reducer;
