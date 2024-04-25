@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { GoogleAuthProvider, NextOrObserver, User, createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
-import { QueryDocumentSnapshot, doc, getDoc, getFirestore, setDoc } from "firebase/firestore";
+import { QueryDocumentSnapshot, doc, getDoc, getFirestore, setDoc, writeBatch } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAl5Mwv-VSHKd0VFPrREX2-UaQzovoO6Q4",
@@ -20,10 +20,20 @@ googleProvider.setCustomParameters({
   prompt: 'select_account'
 });
 
-export const auth = getAuth();
-export const signInWithGooglePopup = () => signInWithPopup(auth, googleProvider);
-
 export const db = getFirestore();
+export const auth = getAuth();
+
+export const addTaskDocumentToUser = async (objectToAdd: {createdAt: Date, task: string}) => {
+  const batch = writeBatch(db);
+
+  if(!auth.currentUser) return;
+
+  const taskRef = doc(db, 'users', auth.currentUser.uid, 'tasks', objectToAdd.createdAt.toISOString());
+  batch.set(taskRef, objectToAdd);
+
+  await batch.commit();
+}
+export const signInWithGooglePopup = () => signInWithPopup(auth, googleProvider);
 
 export type AdditionalInformation = {
   displayName?: string;

@@ -7,8 +7,10 @@ import Button from '../button/Button';
 import './AddTask.styles.scss';
 import { useDispatch } from 'react-redux';
 import { addTask } from '../../store/tasks/tasks.reducer';
+import { addTaskDocumentToUser } from '../../utils/firebase';
 
 const defaultInputValues = {
+  createdAt: new Date(),
   task: ''
 };
 
@@ -19,16 +21,19 @@ const AddTask = () => {
   const dispatch = useDispatch();
 
   const handleTextChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
+    const { value } = event.target;
 
-    setInputValues({...inputValues, [name]: value});
+    setInputValues({...inputValues, task: value});
   }
 
   const resetInputValues = () => {
     setInputValues(defaultInputValues);
   }
 
-  const handleAddTask = () => {
+  const handleAddTask = async () => {
+    setInputValues({...inputValues, createdAt: new Date()})
+
+    await addTaskDocumentToUser(inputValues);
     dispatch(addTask(task));
     resetInputValues();
   }
