@@ -1,6 +1,28 @@
 import { initializeApp } from "firebase/app";
-import { GoogleAuthProvider, NextOrObserver, User, createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
-import { QueryDocumentSnapshot, doc, getDoc, getFirestore, setDoc, writeBatch } from "firebase/firestore";
+import { 
+  GoogleAuthProvider, 
+  NextOrObserver, 
+  User, 
+  createUserWithEmailAndPassword, 
+  getAuth, 
+  onAuthStateChanged, 
+  signInWithEmailAndPassword, 
+  signInWithPopup, 
+  signOut 
+} from "firebase/auth";
+import { 
+  QueryDocumentSnapshot, 
+  collection, 
+  doc, 
+  getDoc, 
+  getDocs, 
+  getFirestore, 
+  query, 
+  setDoc, 
+  writeBatch 
+} from "firebase/firestore";
+
+import { Task } from "../store/tasks/task.types";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAl5Mwv-VSHKd0VFPrREX2-UaQzovoO6Q4",
@@ -20,19 +42,32 @@ googleProvider.setCustomParameters({
   prompt: 'select_account'
 });
 
-export const db = getFirestore();
+export const db = getFirestore(firebaseApp);
 export const auth = getAuth();
 
-export const addTaskDocumentToUser = async (objectToAdd: {createdAt: Date, task: string}) => {
+export const addTaskDocumentToUser = async (objectToAdd: Task) => {
   const batch = writeBatch(db);
 
   if(!auth.currentUser) return;
 
-  const taskRef = doc(db, 'users', auth.currentUser.uid, 'tasks', objectToAdd.createdAt.toISOString());
+  const taskRef = doc(db, 'users', auth.currentUser.uid, 'tasks', objectToAdd.id);
   batch.set(taskRef, objectToAdd);
 
   await batch.commit();
 }
+
+export const getTaskCollectionFromUser = async () => {
+  if(!auth.currentUser) return;
+
+  const taskCollectionRef = collection(db, 'users', auth.currentUser.uid, 'tasks');
+
+  const q = query(taskCollectionRef);
+
+  const querySnapshot = await getDocs(q);
+
+  return querySnapshot.docs.map((docSnapshot) => docSnapshot.data());
+}
+
 export const signInWithGooglePopup = () => signInWithPopup(auth, googleProvider);
 
 export type AdditionalInformation = {

@@ -1,29 +1,32 @@
 import { ChangeEvent, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { v4 as uuidv4 } from 'uuid';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAdd } from '@fortawesome/free-solid-svg-icons';
 import Button from '../button/Button';
 
 import './AddTask.styles.scss';
-import { useDispatch } from 'react-redux';
 import { addTask } from '../../store/tasks/tasks.reducer';
 import { addTaskDocumentToUser } from '../../utils/firebase';
 
-const defaultInputValues = {
-  createdAt: new Date(),
-  task: ''
+import { Task } from '../../store/tasks/task.types';
+
+const defaultInputValues: Task = {
+  id: '',
+  content: ''
 };
 
 const AddTask = () => {
   const [ inputValues, setInputValues ] = useState(defaultInputValues);
-  const { task } = inputValues;
+  const { content } = inputValues;
 
   const dispatch = useDispatch();
 
   const handleTextChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
 
-    setInputValues({...inputValues, task: value});
+    setInputValues({...inputValues, content: value});
   }
 
   const resetInputValues = () => {
@@ -31,10 +34,11 @@ const AddTask = () => {
   }
 
   const handleAddTask = async () => {
-    setInputValues({...inputValues, createdAt: new Date()})
+    const taskId = uuidv4();
+    const newTask = { ...inputValues, id: taskId };
 
-    await addTaskDocumentToUser(inputValues);
-    dispatch(addTask(task));
+    await addTaskDocumentToUser(newTask);
+    dispatch(addTask(newTask));
     resetInputValues();
   }
 
@@ -44,7 +48,7 @@ const AddTask = () => {
       <input 
         className='add-task-input' 
         name='task' 
-        value={task} 
+        value={content} 
         onChange={handleTextChange}
         placeholder='Add new task...' 
         type="text" />

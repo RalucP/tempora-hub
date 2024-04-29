@@ -1,21 +1,28 @@
+import { useSelector } from 'react-redux';
+import { selectTasks } from '../../store/tasks/tasks.selector';
+
 import AddTask from '../add-task/AddTask';
 import Task from '../task/Task';
 
 import './TasksContainer.styles.scss';
 
 const TasksContainer = () => {
+  const tasksArray = useSelector(selectTasks);
 
   return(
     <div className='tasks-container'>
       <AddTask />
-      <Task 
-          id='task1'
-          name='task1'
-        >Lorem ipsum</Task>
-        <Task 
-          id='task2'
-          name='task2'
-        >Lorem ipsum dolor sit amet</Task>
+      {
+        tasksArray.map((task) => {
+          return(
+            <Task 
+              key={task.id}
+              id={task.id}
+              name={task.id}
+            >{task.content}</Task> 
+          )
+        })
+      }
     </div>
   )
 }

@@ -5,7 +5,7 @@ export type TaskProps =  InputHTMLAttributes<HTMLInputElement>
 & LabelHTMLAttributes<HTMLLabelElement>
 
 const Task: FC<TaskProps> = ({ id, children, ...otherProps }) => {
-  const [ status, setStatus ] = useState(true);
+  const [ status, setStatus ] = useState(false);
 
   const onCheckboxChange = () => {
     setStatus(!status);
