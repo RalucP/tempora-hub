@@ -19,6 +19,7 @@ const TasksContainer = () => {
               key={task.id}
               id={task.id}
               name={task.id}
+              checked={task.status}
             >{task.content}</Task> 
           )
         })

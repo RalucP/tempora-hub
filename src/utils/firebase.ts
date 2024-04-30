@@ -19,6 +19,7 @@ import {
   getFirestore, 
   query, 
   setDoc, 
+  updateDoc, 
   writeBatch 
 } from "firebase/firestore";
 
@@ -66,6 +67,16 @@ export const getTaskCollectionFromUser = async () => {
   const querySnapshot = await getDocs(q);
 
   return querySnapshot.docs.map((docSnapshot) => docSnapshot.data());
+}
+
+export const updateTaskStatusInFirestore = async (taskId: string, status: boolean) => {
+  if(!auth.currentUser) return;
+
+  const taskDocRef = doc(db, 'users', auth.currentUser.uid, 'tasks', taskId);
+
+  await updateDoc(taskDocRef, {
+    status: status
+  });
 }
 
 export const signInWithGooglePopup = () => signInWithPopup(auth, googleProvider);

@@ -14,7 +14,8 @@ import { Task } from '../../store/tasks/task.types';
 
 const defaultInputValues: Task = {
   id: '',
-  content: ''
+  content: '',
+  status: false
 };
 
 const AddTask = () => {
