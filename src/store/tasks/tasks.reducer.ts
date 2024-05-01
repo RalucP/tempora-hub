@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { Task } from "./task.types";
-import { updateTaskStatusInFirestore } from "../../utils/firebase";
+import { deleteTaskFromFirebase, updateTaskStatusInFirestore } from "../../utils/firebase";
 
 export type TaskState = {
   readonly tasks: Task[];
@@ -28,6 +28,14 @@ const setStatus = (tasks: TaskState, taskToBeUpdatedId: string) => {
   })
 }
 
+const removeTask = (tasks: TaskState, taskToBeDeletedId: string) => {
+  const existingTask = tasks.tasks.find((task) => task.id === taskToBeDeletedId)
+
+  if(!existingTask) return tasks.tasks;
+
+  return tasks.tasks.filter(task =>  task.id !== taskToBeDeletedId)
+}
+
 export const updateTaskStatus = createAsyncThunk(
   'task/updateStatus',
   async ({ id, status }: { id: string; status: boolean }) => {
@@ -39,6 +47,19 @@ export const updateTaskStatus = createAsyncThunk(
       console.log("Error while updating task status: " + error);
     }
 })
+
+export const deleteTask = createAsyncThunk(
+  'task/deleteTask', 
+  async ({id}: {id: string}) => {
+    try{
+      await deleteTaskFromFirebase(id);
+      return id;
+    }
+    catch(error) {
+      console.log("There was a problem deleting the task: " + error);
+    }
+  }
+)
 
 export const taskSlice = createSlice({
   name: 'task',
@@ -52,13 +73,21 @@ export const taskSlice = createSlice({
     }
   },
   extraReducers: (builder) => {
-    builder.addCase(updateTaskStatus.fulfilled, (state, action) => {
-      const taskId = action.payload;
+    builder
+      .addCase(updateTaskStatus.fulfilled, (state, action) => {
+        const taskId = action.payload;
 
-      if(!taskId) return;
+        if(!taskId) return;
 
-      state.tasks = setStatus(state, taskId);
-    });
+        state.tasks = setStatus(state, taskId);
+      })
+      .addCase(deleteTask.fulfilled, (state, action) => {
+        const taskId = action.payload;
+
+        if(!taskId) return;
+
+        state.tasks = removeTask(state, taskId);
+      })
   }
 });
 

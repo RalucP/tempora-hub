@@ -1,6 +1,9 @@
 import { FC, InputHTMLAttributes, LabelHTMLAttributes, useState } from 'react';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
-import { updateTaskStatus } from '../../store/tasks/tasks.reducer';
+import { deleteTask, updateTaskStatus } from '../../store/tasks/tasks.reducer';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 import './Task.styles.scss'
 
@@ -25,6 +28,16 @@ const Task: FC<TaskProps> = ({ id, children, checked, ...otherProps }) => {
     dispatch(updateTaskStatus(payload));
   }
 
+  const onDeleteTask = async () => {
+    if(!id) return;
+
+    const payload = {
+      id
+    }
+
+    dispatch(deleteTask(payload));
+  }
+
   return (
     <div className='task-container'>
       <input 
@@ -38,6 +51,7 @@ const Task: FC<TaskProps> = ({ id, children, checked, ...otherProps }) => {
       <label htmlFor={id} className='task-label'>
         {children}
       </label>
+      <FontAwesomeIcon onClick={onDeleteTask} className='icon' icon={faTrash}/>
     </div>
   )
 }

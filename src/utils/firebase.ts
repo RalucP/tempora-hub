@@ -13,6 +13,7 @@ import {
 import { 
   QueryDocumentSnapshot, 
   collection, 
+  deleteDoc, 
   doc, 
   getDoc, 
   getDocs, 
@@ -77,6 +78,14 @@ export const updateTaskStatusInFirestore = async (taskId: string, status: boolea
   await updateDoc(taskDocRef, {
     status: status
   });
+}
+
+export const deleteTaskFromFirebase = async (taskId: string) => {
+  if(!auth.currentUser) return;
+
+  const taskDocRef = doc(db, 'users', auth.currentUser.uid, 'tasks', taskId);
+
+  await deleteDoc(taskDocRef);
 }
 
 export const signInWithGooglePopup = () => signInWithPopup(auth, googleProvider);

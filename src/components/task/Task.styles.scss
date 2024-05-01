@@ -11,7 +11,19 @@
   border: 1px solid var(--text-color-10);
 
   display: grid;
-  grid-template-columns: 4em auto;
+  grid-template-columns: 4em auto 1em;
+
+  & .icon{
+    padding: .5em;
+    color: var(--primary-color);
+    border-radius: .3em;
+
+    cursor: pointer;
+
+    &:hover{
+      background-color: var(--text-color-10);
+    }
+  }
 
   & .task-label{
     position: relative;
