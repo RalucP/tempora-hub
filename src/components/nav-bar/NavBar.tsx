@@ -7,6 +7,7 @@ import User from '../user/User';
 import './NavBar.styles.scss';
 import { setIsDropdownOpen } from '../../store/user/user.reducer';
 import useClickOutside from '../../hooks/useClickOutside';
+import { useEffect } from 'react';
 
 const NavBar = () => {
   const isDropdownOpen = useSelector(selectIsDropdownOpen);
@@ -22,6 +23,9 @@ const NavBar = () => {
 
   const ref = useClickOutside(handleClickOutside);
 
+  useEffect(() => {
+    dispatch(setIsDropdownOpen(false));
+  }, [dispatch]);
 
   return(
     <nav className="nav-bar">
