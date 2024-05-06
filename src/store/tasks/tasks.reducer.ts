@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { Task } from "./task.types";
-import { deleteTaskFromFirebase, updateTaskStatusInFirestore } from "../../utils/firebase";
+import { deleteTaskFromFirebase, getTaskCollectionFromUser, updateTaskStatusInFirestore } from "../../utils/firebase";
 
 export type TaskState = {
   readonly tasks: Task[];
@@ -48,6 +48,19 @@ const sortTasksByStatus = (tasks: Task[]) => {
   })
 }
 
+export const setTasks = createAsyncThunk(
+  'task/setTasks',
+  async() => {
+    try {
+      const tasks = await getTaskCollectionFromUser();
+      return tasks;
+    }
+    catch (error) {
+      console.log("Error fetching tasks: " + error);
+    }
+  }
+)
+
 export const updateTaskStatus = createAsyncThunk(
   'task/updateStatus',
   async ({ id, status }: { id: string; status: boolean }) => {
@@ -77,15 +90,25 @@ export const taskSlice = createSlice({
   name: 'task',
   initialState: INITIAL_STATE,
   reducers: {
-    setTasks(state, action) {
-      state.tasks = sortTasksByStatus(action.payload)
-    },
     addTask(state, action) {
       state.tasks = sortTasksByStatus(addNewTask(state.tasks, action.payload))
     }
   },
   extraReducers: (builder) => {
     builder
+      .addCase(setTasks.fulfilled, (state, action) => {
+        if(!action.payload) return;
+
+        const tasks = action.payload.map((data) => {
+          return {
+            id: data.id,
+            content: data.content,
+            status: data.status
+          }
+        });
+
+        state.tasks = sortTasksByStatus(tasks);
+      })
       .addCase(updateTaskStatus.fulfilled, (state, action) => {
         const taskId = action.payload;
 
@@ -103,6 +126,6 @@ export const taskSlice = createSlice({
   }
 });
 
-export const { setTasks, addTask } = taskSlice.actions;
+export const { addTask } = taskSlice.actions;
 
 export const taskReducer = taskSlice.reducer;
