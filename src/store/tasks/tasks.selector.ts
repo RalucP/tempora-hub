@@ -8,3 +8,8 @@ export const selectTasks = createSelector(
   selectTasksReducer,
   (task) => task.tasks
 )
+
+export const selectIsLoading = createSelector(
+  selectTasksReducer,
+  (tasks) => tasks.isLoading
+)

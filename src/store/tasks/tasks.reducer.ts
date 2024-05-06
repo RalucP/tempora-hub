@@ -4,11 +4,13 @@ import { deleteTaskFromFirebase, getTaskCollectionFromUser, updateTaskStatusInFi
 
 export type TaskState = {
   readonly tasks: Task[];
+  readonly isLoading: boolean;
 
 };
 
 const INITIAL_STATE: TaskState = {
-  tasks: []
+  tasks: [],
+  isLoading: false
 };
 
 const addNewTask = (tasks: Task[], newTask: Task) => {
@@ -108,6 +110,10 @@ export const taskSlice = createSlice({
         });
 
         state.tasks = sortTasksByStatus(tasks);
+        state.isLoading = false;
+      })
+      .addCase(setTasks.pending, (state) => {
+        state.isLoading = true;
       })
       .addCase(updateTaskStatus.fulfilled, (state, action) => {
         const taskId = action.payload;
