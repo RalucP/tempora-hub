@@ -3,7 +3,7 @@ import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { deleteTask, updateTaskStatus } from '../../store/tasks/tasks.reducer';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faCalendar, faChevronUp, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 import './Task.styles.scss'
 
@@ -40,18 +40,30 @@ const Task: FC<TaskProps> = ({ id, children, checked, ...otherProps }) => {
 
   return (
     <div className='task-container'>
-      <input 
-        type="checkbox" 
-        className='task-checkbox' 
-        id={id} 
-        onChange={onCheckboxChange} 
-        checked={status}
-        {...otherProps} 
-      />
-      <label htmlFor={id} className='task-label'>
-        {children}
-      </label>
-      <FontAwesomeIcon onClick={onDeleteTask} className='icon' icon={faTrash}/>
+      <div className="details-container">
+        <input 
+          type="checkbox" 
+          className='task-checkbox' 
+          id={id} 
+          onChange={onCheckboxChange} 
+          checked={status}
+          {...otherProps} 
+        />
+        <label htmlFor={id} className='task-label'>
+          {children}
+        </label>
+        <FontAwesomeIcon onClick={onDeleteTask} className='icon' icon={faTrash}/>
+      </div>
+      {!status && <div className='icons-container'>
+        <div className="icon-container">
+          <FontAwesomeIcon className='icon' icon={faChevronUp} />
+          <span>High</span>
+        </div>
+        <div className="icon-container">
+          <FontAwesomeIcon className='icon' icon={faCalendar} />
+          <span>02/07/2024</span>
+        </div>
+      </div>}
     </div>
   )
 }
